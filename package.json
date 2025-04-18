@@ -1,0 +1,14 @@
+{
+    "name": "wave-master",
+    "version": "",
+    "main": "./run/main.js",
+    "scripts": {
+        "dev": "electron ."
+    },
+    "devDependencies": {
+        "@types/bun": "latest"
+    },
+    "dependencies": {
+        "electron": "^35.1.5"
+    }
+}

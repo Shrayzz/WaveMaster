@@ -1,0 +1,41 @@
+@font-face {
+    font-family: 'ws-bold';
+    src: url('../assets/fonts/WorkSans-Bold.ttf');
+}
+
+@font-face {
+    font-family: 'ws-semi';
+    src: url('../assets/fonts/WorkSans-SemiBold.ttf');
+}
+
+@font-face {
+    font-family: 'ws-regu';
+    src: url('../assets/fonts/WorkSans-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'ws-med';
+    src: url('../assets/fonts/WorkSans-Medium.ttf');
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    background-color: #040207;
+}
+
+#app {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
