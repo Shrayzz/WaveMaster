@@ -1,0 +1,69 @@
+#main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 150px;
+}
+
+.main-container-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 20px;
+}
+
+.main-text-mainTitle {
+    font-family: 'ws-Bold';
+    font-size: 80px;
+    color: aliceblue;
+}
+
+.main-text-mainDesc {
+    font-family: 'ws-Regu';
+    font-size: 40px;
+    color: aliceblue;
+}
+
+.main-container-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+
+.main-container-buttons button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    
+    background-color: rgba(0, 0, 0, 0.5);
+    border: aliceblue solid 5px;
+    border-radius: 10px;
+}
+
+.main-button-playlist, .main-button-editor {
+    width: 300px;
+    height: 300px;
+}
+.main-button-player {
+    width: 320px;
+    height: 320px;
+}
+
+.main-container-buttons img {
+    width: 150px;
+    height: 150px;
+}
+.main-container-buttons p {
+    font-family: 'ws-semi';
+    font-size: 48px;
+    color: aliceblue;
+}
