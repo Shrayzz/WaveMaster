@@ -9,7 +9,7 @@ function createWindow() {
         resizable: true,
         minWidth: 1000,
         minHeight: 600,
-        icon: './src/icons/wavemaster.ico',
+        icon: 'wm.ico',
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,

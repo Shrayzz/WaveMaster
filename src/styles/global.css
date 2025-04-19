@@ -71,8 +71,10 @@ body {
 }
 
 #header img, .important img {
-    width: 24px;
-    height: 24px;
+    position: relative;
+    top: 1px;
+    width: 28px;
+    height: 28px;
 }
 
 #app {
