@@ -7,17 +7,82 @@
     <title>Wave Master</title>
     <link rel="stylesheet" href="styles/global.css" />
     <link rel="stylesheet" href="styles/ui/main.css" />
+    <link rel="stylesheet" href="styles/ui/player.css" />
 </head>
 
 <body>
-    <div id="app"></div>
+    <div id="header">
+        <img src="assets/icons/wm-icon.svg" alt="">
+        <p>WaveMaster</p>
+    </div>
+    <div id="app">
 
-    <script type="module">
-        import { loadScenes } from '../run/renderer.js';
-        window.addEventListener('DOMContentLoaded', () => {
-            loadScenes();
-        });
-    </script>
+        <div id="main" style="display: none;">
+            <div class="main-container-title">
+                <p class="main-text-mainTitle">WaveMaster</p>
+                <p class="main-text-mainDesc">The best simple audio player and editor</p>
+            </div>
+            <div class="main-container-buttons">
+                <button class="main-button-playlist">
+                    <img src="./assets/icons/playlist.svg">
+                    <p class="main-text-playlistText">Playlists</p>
+                </button>
+                <button class="main-button-player">
+                    <img src="./assets/icons/music-note.svg">
+                    <p class="main-text-playerText">Player</p>
+                </button>
+                <button class="main-button-editor">
+                    <img src="./assets/icons/faders.svg">
+                    <p class="main-text-editorText">Editor</p>
+                </button>
+            </div>
+        </div>
+
+        <div id="player" style="display: flex;">
+            <div class="player-container-header">
+                <div class="player-container-header-left">
+                    <button class="player-header-button back">
+                        <img src="./assets/icons/arrow-u-up-left.svg" alt="">
+                    </button>
+                    <button class="player-header-button">
+                        <img src="./assets/icons/gear.svg" alt="">
+                    </button>
+                    <button class="player-header-button">
+                        <img src="./assets/icons/folder-open.svg" alt="">
+                    </button>
+                    <button class="player-header-button">
+                        <img src="./assets/icons/sort-ascending.svg" alt="">
+                    </button>
+                    <button class="github" onclick="alert('Unavailable for now. Please come back later...')">
+                        <img src="assets/icons/github-logo.svg" alt="">
+                    </button>
+                    <button class="donate" onclick="alert('Unavailable for now. Please come back later...')">
+                        <img src="assets/icons/hand-heart.svg" alt="">
+                    </button>
+                </div>
+                <div class="player-container-header-right">
+                    <button class="player-header-button">
+                        <img src="./assets/icons/playlist.svg" alt="">
+                    </button>
+                    <button class="player-header-button">
+                        <img src="./assets/icons/faders.svg" alt="">
+                    </button>
+                </div>
+            </div>
+            <hr class="player-vertical-line">
+            <div class="player-container-list"></div>
+            <hr class="player-vertical-line">
+            <div class="player-container-audio">
+                
+            </div>
+        </div>
+
+        <div id="playlist" style="display: none;"></div>
+        <div id="editor" style="display: none;"></div>
+    </div>
+
+
+    <script type="module" src="./core/animation.js"></script>
 </body>
 
 </html>

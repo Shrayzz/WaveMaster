@@ -1,15 +1,14 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
-const fs = require('fs');
 
 function createWindow() {
     const win = new BrowserWindow({
-        width: 800,
-        height: 450,
+        width: 1400,
+        height: 900,
         frame: false,
         resizable: true,
-        minWidth: 750,
-        minHeight: 500,
+        minWidth: 1000,
+        minHeight: 600,
         icon: './src/icons/wavemaster.ico',
         webPreferences: {
             nodeIntegration: true,
@@ -24,5 +23,7 @@ function createWindow() {
         },
     });
     win.loadFile(path.join(__dirname, '../src/index.html'));
+    win.webContents.openDevTools();
 }
+
 app.on('ready', createWindow);

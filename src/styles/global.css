@@ -26,15 +26,61 @@
 body {
     width: 100%;
     height: 100vh;
-    background-color: #040207;
+    background-image: linear-gradient(45deg, #040207 10%, #12091f 90%);
+    overflow: hidden;
+}
+
+#header {
+    z-index: 999;
+    -webkit-app-region: drag;
+    user-select: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 15px;
+    width: 100%;
+    height: 40px;
+    gap: 7px;
+}
+.important {
+    -webkit-app-region: no-drag;
+    top: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 150px;
+}
+.important button {
+    background-color: transparent;
+    border: none;
+    margin-left: 20px;
+    opacity: 0.8;
+}
+.important button:hover { cursor: pointer; }
+.important img {
+    width: 28px;
+    height: 28px;
+}
+
+#header p {
+    font-family: 'ws-Bold';
+    font-size: 18px;
+    color: rgba(240, 248, 255, 0.4);
+}
+
+#header img, .important img {
+    width: 24px;
+    height: 24px;
 }
 
 #app {
     width: 100vw;
-    height: 100vh;
+    height: calc(100% - 40px);
     position: absolute;
     left: 0;
-    top: 0;
+    top: 40px;
     display: flex;
     align-items: center;
     justify-content: center;

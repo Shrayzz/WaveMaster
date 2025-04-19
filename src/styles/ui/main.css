@@ -1,4 +1,5 @@
 #main {
+    position: absolute;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -8,6 +9,7 @@
 }
 
 .main-container-title {
+    user-select: none;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,6 +31,7 @@
 }
 
 .main-container-buttons {
+    user-select: none;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -52,10 +55,18 @@
 .main-button-playlist, .main-button-editor {
     width: 300px;
     height: 300px;
+    transition: transform ease-in-out 0.2s, background-color ease-in-out 0.2s;
 }
 .main-button-player {
     width: 320px;
     height: 320px;
+    transition: transform ease-in-out 0.2s, background-color ease-in-out 0.2s;
+}
+.main-button-playlist:hover, .main-button-editor:hover, .main-button-player:hover {
+    transform: scale(1.08);
+    cursor: pointer;
+    background-color: rgb(24, 11, 36);
+    transition: transform ease-in-out 0.2s, background-color ease-in-out 0.2s;
 }
 
 .main-container-buttons img {
@@ -66,4 +77,15 @@
     font-family: 'ws-semi';
     font-size: 48px;
     color: aliceblue;
+}
+
+@media (max-width: 1200px), (max-height: 750px) {
+    #main { gap: 100px; }
+    .main-text-mainTitle { font-size: 64px; }
+    .main-text-mainDesc { font-size: 28px; }
+    .main-container-buttons { gap: 60px; }
+    .main-button-playlist, .main-button-editor { width: 220px; height: 220px; }
+    .main-button-player { width: 240px; height: 240px; }
+    .main-container-buttons img { width: 90px; height: 90px; }
+    .main-container-buttons p { font-size: 32px; }
 }
