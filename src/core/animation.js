@@ -45,7 +45,3 @@ export function setDisplayWithoutAnim(current, next) {
     currentScene.style.display = 'none';
     nextScene.style.display = 'flex';
 }
-
-
-document.querySelector('.main-button-player').addEventListener('click', () => setDisplayWithAnim('main', 'player'))
-document.querySelector('.player-container-header .back').addEventListener('click', () => setDisplayWithAnim('player', 'main'))

@@ -73,15 +73,25 @@
             <div class="player-container-list"></div>
             <hr class="player-vertical-line">
             <div class="player-container-audio">
-                
+                <audio controls src=""></audio>
             </div>
         </div>
 
         <div id="playlist" style="display: none;"></div>
         <div id="editor" style="display: none;"></div>
+        <div id="settings" style="display: none;">
+            <!-- 
+            Params :
+            - List scale
+            - List details
+            - Formats enabled/disabled
+            - What window when open the app
+              -->
+        </div>
     </div>
 
 
+    <script type="module" src="./core/event.js"></script>
     <script type="module" src="./core/animation.js"></script>
 </body>
 

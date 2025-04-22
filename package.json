@@ -9,6 +9,7 @@
         "@types/bun": "latest"
     },
     "dependencies": {
-        "electron": "^35.1.5"
+        "electron": "^35.1.5",
+        "jsmediatags": "^3.9.7"
     }
 }

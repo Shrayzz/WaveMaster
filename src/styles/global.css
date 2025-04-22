@@ -43,26 +43,6 @@ body {
     height: 40px;
     gap: 7px;
 }
-.important {
-    -webkit-app-region: no-drag;
-    top: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    right: 150px;
-}
-.important button {
-    background-color: transparent;
-    border: none;
-    margin-left: 20px;
-    opacity: 0.8;
-}
-.important button:hover { cursor: pointer; }
-.important img {
-    width: 28px;
-    height: 28px;
-}
 
 #header p {
     font-family: 'ws-Bold';
@@ -70,7 +50,7 @@ body {
     color: rgba(240, 248, 255, 0.4);
 }
 
-#header img, .important img {
+#header img {
     position: relative;
     top: 1px;
     width: 28px;
