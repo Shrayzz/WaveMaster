@@ -22,7 +22,7 @@ function createWindow() {
             symbolColor: "#ffffff",
         },
     });
-    win.loadFile(path.join(__dirname, '../src/index.html'));
+    win.loadFile(path.join(__dirname, '../public/index.html'));
     win.webContents.openDevTools();
 }
 

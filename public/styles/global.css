@@ -1,21 +1,21 @@
 @font-face {
     font-family: 'ws-bold';
-    src: url('../assets/fonts/WorkSans-Bold.ttf');
+    src: url('../../assets/fonts/WorkSans-Bold.ttf');
 }
 
 @font-face {
     font-family: 'ws-semi';
-    src: url('../assets/fonts/WorkSans-SemiBold.ttf');
+    src: url('../../assets/fonts/WorkSans-SemiBold.ttf');
 }
 
 @font-face {
     font-family: 'ws-regu';
-    src: url('../assets/fonts/WorkSans-Regular.ttf');
+    src: url('../../assets/fonts/WorkSans-Regular.ttf');
 }
 
 @font-face {
     font-family: 'ws-med';
-    src: url('../assets/fonts/WorkSans-Medium.ttf');
+    src: url('../../assets/fonts/WorkSans-Medium.ttf');
 }
 
 * {

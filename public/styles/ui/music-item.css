@@ -1,0 +1,72 @@
+.music-item {
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    width: 93%;
+    padding: 18px;
+    font-family: 'ws-regu';
+    color: aliceblue;
+    font-size: 24px;
+    transition: font-family ease-in-out 0.2s, color ease-in-out 0.2s;
+}
+
+.music-item:hover {
+    /* font-family: 'ws-bold'; */
+    color: rgb(0, 255, 0);
+    background-image: linear-gradient(
+        45deg, rgba(2, 7, 2, 0.02) 5%, 
+               rgba(21, 255, 0, 0.137) 50%, 
+               rgba(2, 7, 2, 0.02) 95%);
+    transition: font-family ease-in-out 0.2s, color ease-in-out 0.2s;
+}
+
+.music-item-white {
+    background-image: linear-gradient(
+        45deg, rgba(4, 2, 7, 0.02) 10%, 
+               rgba(240, 248, 255, 0.05) 50%, 
+               rgba(4, 2, 7, 0.02) 90%);
+}
+
+.music-hr {
+    opacity: 0.2;
+    width: 93%;
+}
+
+.container-audio {
+    position: relative;
+    bottom: 5px;
+
+    width: 97%;
+    height: 80px;
+    padding: 10px;
+    border: red solid 1px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.music-title { 
+    width: 75%; 
+    overflow-x: hidden;
+    white-space: nowrap;
+    /* border: blue solid 1px; */
+}
+.music-artist { 
+    width: 300px; 
+    /* border: green solid 1px; */
+}
+.music-duration { 
+    display: flex;
+    justify-content: flex-end;
+    width: 100px; 
+    /* border: pink solid 1px; */
+}
+
+#audio-player {
+    display: flex;
+    width: 93%;
+}

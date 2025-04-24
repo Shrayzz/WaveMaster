@@ -7,12 +7,13 @@
     <title>Wave Master</title>
     <link rel="stylesheet" href="styles/global.css" />
     <link rel="stylesheet" href="styles/ui/main.css" />
+    <link rel="stylesheet" href="styles/ui/music-item.css" />
     <link rel="stylesheet" href="styles/ui/player.css" />
 </head>
 
 <body>
     <div id="header">
-        <img src="assets/icons/wm-icon.svg" alt="">
+        <img src="../assets/icons/wm-icon.svg" alt="">
         <p>WaveMaster</p>
     </div>
     <div id="app">
@@ -24,15 +25,15 @@
             </div>
             <div class="main-container-buttons">
                 <button class="main-button-playlist">
-                    <img src="./assets/icons/playlist.svg">
+                    <img src="../assets/icons/playlist.svg">
                     <p class="main-text-playlistText">Playlists</p>
                 </button>
                 <button class="main-button-player">
-                    <img src="./assets/icons/music-note.svg">
+                    <img src="../assets/icons/music-note.svg">
                     <p class="main-text-playerText">Player</p>
                 </button>
                 <button class="main-button-editor">
-                    <img src="./assets/icons/faders.svg">
+                    <img src="../assets/icons/faders.svg">
                     <p class="main-text-editorText">Editor</p>
                 </button>
             </div>
@@ -42,30 +43,30 @@
             <div class="player-container-header">
                 <div class="player-container-header-left">
                     <button class="player-header-button back">
-                        <img src="./assets/icons/arrow-u-up-left.svg" alt="">
+                        <img src="../assets/icons/arrow-u-up-left.svg" alt="">
                     </button>
                     <button class="player-header-button">
-                        <img src="./assets/icons/gear.svg" alt="">
+                        <img src="../assets/icons/gear.svg" alt="">
                     </button>
                     <button class="player-header-button">
-                        <img src="./assets/icons/folder-open.svg" alt="">
+                        <img src="../assets/icons/folder-open.svg" alt="">
                     </button>
                     <button class="player-header-button">
-                        <img src="./assets/icons/sort-ascending.svg" alt="">
+                        <img src="../assets/icons/sort-ascending.svg" alt="">
                     </button>
                     <button class="github" onclick="alert('Unavailable for now. Please come back later...')">
-                        <img src="assets/icons/github-logo.svg" alt="">
+                        <img src="../assets/icons/github-logo.svg" alt="">
                     </button>
                     <button class="donate" onclick="alert('Unavailable for now. Please come back later...')">
-                        <img src="assets/icons/hand-heart.svg" alt="">
+                        <img src="../assets/icons/hand-heart.svg" alt="">
                     </button>
                 </div>
                 <div class="player-container-header-right">
                     <button class="player-header-button">
-                        <img src="./assets/icons/playlist.svg" alt="">
+                        <img src="../assets/icons/playlist.svg" alt="">
                     </button>
                     <button class="player-header-button">
-                        <img src="./assets/icons/faders.svg" alt="">
+                        <img src="../assets/icons/faders.svg" alt="">
                     </button>
                 </div>
             </div>
@@ -73,7 +74,12 @@
             <div class="player-container-list"></div>
             <hr class="player-vertical-line">
             <div class="player-container-audio">
-                <audio controls src=""></audio>
+                <audio controls id="audio-player"></audio> <!-- Disabled -->
+                <div class="player-progress-bar"></div>
+                <div class="player-play-pause"></div>
+                <div class="player-volume"></div>
+                <div class="player-random-btn"></div>
+                <div class="player-loop-btn"></div> <!-- 3 phases : none, all, 1 time one song -->
             </div>
         </div>
 
@@ -92,6 +98,7 @@
 
 
     <script type="module" src="./core/event.js"></script>
+    <script type="module" src="./core/player.js"></script>
     <script type="module" src="./core/animation.js"></script>
 </body>
 
