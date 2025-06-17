@@ -1,10 +1,14 @@
 import { setDisplayWithAnim, setDisplayWithoutAnim } from "./animation.js";
 import { getMusic, createMusic } from './music.js'
 
+const playerLoader = document.getElementById("loader");
+
 // DOM events
 window.addEventListener('DOMContentLoaded', async() => {
     const data = await getMusic();
     createMusic(data);
+
+    playerLoader.style.display = "none";
 
     document.querySelectorAll('.music-item').forEach(item => {
         item.addEventListener('click', () => {

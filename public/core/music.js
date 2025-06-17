@@ -29,6 +29,7 @@ export async function createMusic(data) {
 
         isPair++;
     }
+    playerLoader.style.display = 'none';
 }
 
 function createMusicItem(fullPath, title, artist, duration, isPair) {

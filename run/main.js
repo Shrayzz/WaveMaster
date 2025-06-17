@@ -23,7 +23,7 @@ function createWindow() {
         },
     });
     win.loadFile(path.join(__dirname, '../public/index.html'));
-    win.webContents.openDevTools();
+    // win.webContents.openDevTools();
 }
 
 app.on('ready', createWindow);

@@ -18,7 +18,7 @@
     </div>
     <div id="app">
 
-        
+
 
         <div id="main" style="display: none;">
             <div class="main-container-title">
@@ -26,7 +26,7 @@
                 <p class="main-text-mainDesc">The best simple audio player and editor</p>
             </div>
             <div class="main-container-buttons">
-                <button class="main-button-playlist">
+                <button class="main-button-playlist" disabled>
                     <img src="../assets/icons/playlist.svg">
                     <p class="main-text-playlistText">Playlists</p>
                 </button>
@@ -34,7 +34,7 @@
                     <img src="../assets/icons/music-note.svg">
                     <p class="main-text-playerText">Player</p>
                 </button>
-                <button class="main-button-editor">
+                <button class="main-button-editor" disabled>
                     <img src="../assets/icons/faders.svg">
                     <p class="main-text-editorText">Editor</p>
                 </button>
@@ -73,16 +73,38 @@
                 </div>
             </div>
             <hr class="player-vertical-line">
-            <div class="loader" style="display: none;"></div>
+            <div id="loader"></div>
             <div class="player-container-list"></div>
             <hr class="player-vertical-line">
             <div class="player-container-audio">
-                <audio controls id="audio-player"></audio> <!-- Disabled -->
-                <div class="player-progress-bar"></div>
-                <div class="player-play-pause"></div>
-                <div class="player-volume"></div>
-                <div class="player-random-btn"></div>
-                <div class="player-loop-btn"></div> <!-- 3 phases : none, all, 1 time one song -->
+                <audio id="audio-player"></audio>
+                <div class="player-container-selected-music">
+                    <div class="player-music-you-listen">
+                        <img class="music-title-part music-title-part-disabled" src="../assets/icons/music-notes.svg"
+                            alt="">
+                        <p class="music-title-part music-title-part-disabled">You listen :</p>
+                    </div>
+                    <div class="player-music-name">
+                        <div class="music-title-part border-left music-title-part-disabled"></div>
+
+                        <div class="music-name-content">
+                            <span class="music-title-content"></span>
+                        </div>
+
+                        <div class="music-title-part border-right music-title-part-disabled"></div>
+                    </div>
+                </div>
+                <div class="player-container-main-audio">
+                    <div class="player-progress-bar"></div>
+                    <div class="player-play-pause"></div>
+                </div>
+                <div class="player-container-audio-adjusts">
+                    <div class="player-volume"></div>
+                    <div class="player-audio-adjusts">
+                        <div class="player-random-btn"></div>
+                        <div class="player-loop-btn"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
