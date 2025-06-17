@@ -4,6 +4,8 @@ const playPauseBtn = document.querySelector('.player-play-pause');
 const playBtn = document.querySelector('.player-play');
 const pauseBtn = document.querySelector('.player-pause');
 const progressBar = document.querySelector('.player-progress-bar');
+const progressFill = document.querySelector('.player-progress-fill');
+const progressThumb = document.querySelector('.player-progress-thumb');
 const volumeControl = document.querySelector('.player-volume');
 const randomBtn = document.querySelector('.player-random-btn');
 const loopBtn = document.querySelector('.player-loop-btn');
@@ -22,29 +24,20 @@ function updateCurrentMusicDisplay() {
 
             if (span) {
                 span.textContent = title;
-
-                // Stopper animation précédente
                 span.style.animation = 'none';
-
-                // Forcer recalcul layout pour reset animation
                 void span.offsetWidth;
 
-                // Calcul dynamique durée + distance
                 const containerWidth = span.parentElement.offsetWidth;
                 const textWidth = span.scrollWidth;
                 const distance = textWidth + containerWidth;
 
-                // Variable CSS pour animation
                 span.style.setProperty('--scroll-distance', `${distance}px`);
 
-                // Calcul durée (exemple ratio 5s / 100px)
                 const duration = (distance / 100) * 2;
 
-                // Appliquer animation avec durée dynamique
                 span.style.animation = `scrollText ${duration}s linear infinite`;
             }
 
-            // Gestion classes d’opacité sur éléments décoratifs
             document.querySelectorAll(".music-title-part").forEach(el => {
                 el.classList.add("music-title-part-active");
                 el.classList.remove("music-title-part-disabled");
@@ -69,12 +62,34 @@ playPauseBtn.addEventListener('click', () => {
     }
 });
 
-progressBar.parentElement.addEventListener('click', (e) => {
-    const rect = progressBar.parentElement.getBoundingClientRect();
-    const percent = (e.clientX - rect.left) / rect.width;
-    audio.currentTime = percent * audio.duration;
+audio.addEventListener('timeupdate', () => {
+    const percent = (audio.currentTime / audio.duration) * 100;
+    progressFill.style.width = `${percent}%`;
+    progressThumb.style.left = `${percent}%`;
+});
+let isDragging = false;
+
+progressBar.parentElement.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    updateProgress(e);
 });
 
+document.addEventListener('mousemove', (e) => {
+    if (isDragging) {
+        updateProgress(e);
+    }
+});
+
+document.addEventListener('mouseup', () => {
+    isDragging = false;
+});
+
+function updateProgress(e) {
+    const rect = progressBar.parentElement.getBoundingClientRect();
+    let percent = (e.clientX - rect.left) / rect.width;
+    percent = Math.max(0, Math.min(1, percent));
+    audio.currentTime = percent * audio.duration;
+}
 const volumeSlider = document.createElement('input');
 volumeSlider.type = 'range';
 volumeSlider.min = 0;

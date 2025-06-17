@@ -89,30 +89,36 @@
 
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
 
 .player-container-selected-music,
 .player-container-main-audio,
 .player-container-audio-adjusts {
-    /* border: red solid 1px; */
+    position: relative;
     display: flex;
     flex-direction: column;
 }
 
 .player-container-selected-music {
+    user-select: none;
     margin-left: 3%;
-    width: 25%;
+    width: 23%;
 }
 
 .player-container-main-audio {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 50%;
 }
 
 .player-container-audio-adjusts {
-    width: 25%;
+    padding: 10px;
+    width: 23%;
 }
+
 
 .player-music-you-listen {
     user-select: none;
@@ -128,15 +134,16 @@
 
 .player-music-name {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     overflow: hidden;
     width: 100%;
     margin-top: 2px;
 }
 
-.music-title-part-disabled {
+/* .music-title-part-disabled {
     opacity: 0;
-}
+} */
 
 .music-title-part-active {
     opacity: 1;
@@ -152,11 +159,12 @@
 
 .player-music-name .border-left {
     background-image: linear-gradient(90deg, #040207 10%, #00000000 90%);
+    left: -0.5%;
 }
 
 .player-music-name .border-right {
     background-image: linear-gradient(90deg, #00000000 10%, #040207 90%);
-    left: 25%;
+    right: -0.5%;
 }
 
 .music-name-content {
@@ -181,6 +189,42 @@
 .player-music-you-listen img {
     width: 25px;
     height: 25px;
+}
+
+.player-progress-container {
+  position: relative;
+  height: 5px;
+  width: 100%;
+  background-color: #333;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.player-progress-bar {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: 5px;
+  background-color: #444;
+}
+
+.player-progress-fill {
+  height: 100%;
+  background-color: rgb(0, 255, 0);;
+  width: 0%;
+  border-radius: 5px 0 0 5px;
+}
+
+.player-progress-thumb {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translate(-50%, -50%);
+  width: 13px;
+  height: 13px;
+  background-color: white;
+  border-radius: 50%;
+  pointer-events: none; /* Permet de cliquer à travers le thumb */
 }
 
 .player-play-pause {
