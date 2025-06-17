@@ -5,18 +5,6 @@ import fs from "fs";
 import { createMusic } from "../backend/instance.js";
 import { addFolder } from "../backend/folder.js";
 
-const mimeTypes = {
-    ".js": "text/javascript",
-    ".html": "text/html",
-    ".css": "text/css",
-    ".json": "application/json",
-    ".png": "image/png",
-    ".jpg": "image/jpeg",
-    ".jpeg": "image/jpeg",
-    ".svg": "image/svg+xml",
-    ".ico": "image/x-icon",
-};
-
 const baseDir = path.join(import.meta.dir, "run");
 
 const server = serve({
