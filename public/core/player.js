@@ -62,10 +62,24 @@ playPauseBtn.addEventListener('click', () => {
     }
 });
 
+function formatTime(seconds) {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+}
+
 audio.addEventListener('timeupdate', () => {
     const percent = (audio.currentTime / audio.duration) * 100;
     progressFill.style.width = `${percent}%`;
     progressThumb.style.left = `${percent}%`;
+
+    const currentTimeSpan = document.querySelector('.player-read-current-duration');
+    const totalTimeSpan = document.querySelector('.player-read-total-duration');
+
+    if (currentTimeSpan && totalTimeSpan) {
+        currentTimeSpan.textContent = formatTime(audio.currentTime);
+        totalTimeSpan.textContent = formatTime(audio.duration || 0);
+    }
 });
 let isDragging = false;
 
