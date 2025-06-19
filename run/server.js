@@ -19,9 +19,9 @@ const server = serve({
 
         // Folder and music creation
         if (req.method === "POST" && url.pathname === "/music/add") {
-            const folderURL = await req.text(); 
+            const folderURL = await req.text();
             await addFolder(folderURL);
-        
+
             return new Response("Ajouté", { status: 200 });
         }
         // if(req.method === "GET" && url.pathname === '/music/remove') {}

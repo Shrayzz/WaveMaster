@@ -10,39 +10,44 @@ export async function createMusic() {
 
     for (const folderPath of folders.folders) {
         try {
-            const files = fs.readdirSync(folderPath);
+            const allFiles = getAllFilesRecursively(folderPath);
 
-            for (const file of files) {
-                const ext = path.extname(file).toLowerCase();
-                if (!SUPPORTED_FORMATS.includes(ext)) continue;
+            const supportedFiles = allFiles.filter(filePath => {
+                const ext = path.extname(filePath).toLowerCase();
+                return SUPPORTED_FORMATS.includes(ext);
+            });
 
-                const fullPath = path.join(folderPath, file);
-
+            const promises = supportedFiles.map(async (filePath) => {
                 try {
-                    const metadata = await mm.parseFile(fullPath);
-                    const title = metadata.common.title || path.basename(file, ext);
+                    const metadata = await mm.parseFile(filePath);
+                    const ext = path.extname(filePath).toLowerCase();
+                    const title = metadata.common.title || path.basename(filePath, ext);
                     const artist = metadata.common.artist || "Artiste Inconnu";
                     const duration = metadata.format.duration
                         ? formatDuration(metadata.format.duration)
                         : "N/A";
 
-                    music.push({
-                        path: fullPath,
+                    return {
+                        path: filePath,
                         title,
                         artist,
                         duration
-                    });
-
-                } catch (metaErr) {
-                    console.error(`Erreur de métadonnées : ${file}`, metaErr);
+                    };
+                } catch (err) {
+                    console.error(`Erreur de métadonnées : ${filePath}`, err);
+                    return null; 
                 }
-            }
+            });
+
+            const results = await Promise.all(promises);
+            music = music.concat(results.filter(item => item !== null));
 
         } catch (err) {
             console.error(`Erreur lecture dossier : ${folderPath}`, err);
         }
     }
 
+    music.sort((a, b) => a.title.localeCompare(b.title));
     return music;
 }
 
@@ -56,4 +61,22 @@ function formatDuration(seconds) {
     const ss = s.toString().padStart(2, '0');
 
     return `${hh}${mm}:${ss}`;
+}
+
+function getAllFilesRecursively(dirPath) {
+    let results = [];
+
+    const list = fs.readdirSync(dirPath);
+    for (const file of list) {
+        const fullPath = path.join(dirPath, file);
+        const stat = fs.statSync(fullPath);
+
+        if (stat.isDirectory()) {
+            results = results.concat(getAllFilesRecursively(fullPath));
+        } else {
+            results.push(fullPath);
+        }
+    }
+
+    return results;
 }

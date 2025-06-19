@@ -38,10 +38,31 @@ export function setDisplayWithAnim(current, next) {
     });
 }
 
-export function setDisplayWithoutAnim(current, next) {
-    const currentScene = document.getElementById(current);
-    const nextScene = document.getElementById(next);
+export function setDisplayMiniWindow(windowId, state) {
+    const element = document.getElementById(windowId);
+    if (!element) return;
 
-    currentScene.style.display = 'none';
-    nextScene.style.display = 'flex';
+    if (state === false) {
+        element.style.display = 'flex';
+        element.animate([
+            { opacity: 0, transform: 'translateY(50px)' },
+            { opacity: 1, transform: 'translateY(0)' }
+        ], {
+            duration: 200,
+            easing: 'ease-in-out'
+        });
+    } else {
+        const animation = element.animate([
+            { opacity: 1, transform: 'translateY(0)' },
+            { opacity: 0, transform: 'translateY(50px)' }
+        ], {
+            duration: 200,
+            easing: 'ease-in-out'
+        });
+
+        animation.finished.then(() => {
+            element.style.display = 'none';
+        });
+    }
 }
+

@@ -24,6 +24,8 @@ export async function createMusic(data) {
     for (const music of data) {
         const { path: fullPath, title, artist, duration } = music;
 
+        console.log("Création item:", title, artist, duration);
+
         const musicItem = createMusicItem(fullPath, title, artist, duration, isPair);
         container.append(musicItem.div, musicItem.hr);
 
@@ -31,6 +33,7 @@ export async function createMusic(data) {
     }
     playerLoader.style.display = 'none';
 }
+
 
 function createMusicItem(fullPath, title, artist, duration, isPair) {
     const div = document.createElement('div');

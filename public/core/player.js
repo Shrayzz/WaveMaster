@@ -6,7 +6,12 @@ const pauseBtn = document.querySelector('.player-pause');
 const progressBar = document.querySelector('.player-progress-bar');
 const progressFill = document.querySelector('.player-progress-fill');
 const progressThumb = document.querySelector('.player-progress-thumb');
-const volumeControl = document.querySelector('.player-volume');
+const volumeControl = document.querySelector('.player-volume-slider');
+const volumeFill = document.querySelector('.player-volume-fill');
+const volumeImg = document.querySelector('.player-volume');
+const volumeThumb = document.querySelector('.player-volume-thumb');
+const volumeValue = document.querySelector('.player-volume-value');
+const volumeMute = document.querySelector('.player-volume-mute');
 const randomBtn = document.querySelector('.player-random-btn');
 const loopBtn = document.querySelector('.player-loop-btn');
 
@@ -67,7 +72,6 @@ function formatTime(seconds) {
     const secs = Math.floor(seconds % 60);
     return `${mins}:${secs.toString().padStart(2, '0')}`;
 }
-
 audio.addEventListener('timeupdate', () => {
     const percent = (audio.currentTime / audio.duration) * 100;
     progressFill.style.width = `${percent}%`;
@@ -87,13 +91,11 @@ progressBar.parentElement.addEventListener('mousedown', (e) => {
     isDragging = true;
     updateProgress(e);
 });
-
 document.addEventListener('mousemove', (e) => {
     if (isDragging) {
         updateProgress(e);
     }
 });
-
 document.addEventListener('mouseup', () => {
     isDragging = false;
 });
@@ -104,19 +106,88 @@ function updateProgress(e) {
     percent = Math.max(0, Math.min(1, percent));
     audio.currentTime = percent * audio.duration;
 }
-const volumeSlider = document.createElement('input');
-volumeSlider.type = 'range';
-volumeSlider.min = 0;
-volumeSlider.max = 1;
-volumeSlider.step = 0.01;
-volumeSlider.value = audio.volume;
 
-volumeSlider.addEventListener('input', () => {
-    audio.volume = volumeSlider.value;
+function updateVolumeIcon() {
+    const volumePercent = audio.volume * 100;
+
+    volumeImg.classList.remove("player-volume-100", "player-volume-50", "player-volume-0");
+
+    if (audio.muted || audio.volume === 0) {
+        volumeImg.classList.add("player-volume-0");
+    } else if (volumePercent <= 50) {
+        volumeImg.classList.add("player-volume-50");
+    } else {
+        volumeImg.classList.add("player-volume-100");
+    }
+}
+
+function setVolume(clientY) {
+    const rect = volumeControl.getBoundingClientRect();
+    let percent = 1 - (clientY - rect.top) / rect.height;
+    percent = Math.max(0, Math.min(1, percent));
+    audio.volume = percent;
+
+    volumeFill.style.height = `${percent * 100}%`;
+    volumeThumb.style.top = `${(1 - percent) * 100}%`;
+}
+
+volumeControl.addEventListener('mousedown', (e) => {
+    setVolume(e.clientY);
+    previousVolume = audio.volume;
+    volumeValue.textContent = Number(audio.volume * 100).toFixed(0);
+    isVolumeDragging = true;
 });
 
-document.querySelector('.player-volume').appendChild(volumeSlider);
+let isVolumeDragging = false;
 
+document.addEventListener('mousemove', (e) => {
+    if (isVolumeDragging) {
+        setVolume(e.clientY);
+        volumeValue.textContent = Number(audio.volume * 100).toFixed(0);
+
+        if (!audio.muted) {
+            previousVolume = audio.volume; 
+        }
+    }
+});
+
+document.addEventListener('mouseup', () => {
+    isVolumeDragging = false;
+});
+
+function setInitialVolume() {
+    const percent = audio.volume;
+    volumeFill.style.height = `${percent * 100}%`;
+    volumeThumb.style.top = `${(1 - percent) * 100}%`;
+}
+
+audio.addEventListener('volumechange', setInitialVolume);
+setInitialVolume();
+
+let previousVolume = audio.volume;
+
+volumeMute.addEventListener('click', () => {
+    if (audio.muted || audio.volume === 0) {
+        audio.muted = false;
+        audio.volume = previousVolume > 0 ? previousVolume : 0.5;
+
+        volumeValue.textContent = Number(audio.volume * 100).toFixed(0);
+
+        volumeMute.classList.remove('mute');
+        volumeMute.classList.add('demute');
+    } else {
+        previousVolume = audio.volume;
+        audio.muted = true;
+        audio.volume = 0;
+
+        volumeValue.textContent = "Muted";
+
+        volumeMute.classList.remove('demute');
+        volumeMute.classList.add('mute');
+    }
+
+    setInitialVolume();
+});
 
 let loopState = 'none'; // none, all, one
 
