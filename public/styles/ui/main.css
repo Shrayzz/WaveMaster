@@ -72,7 +72,8 @@
     height: 320px;
     transition: transform ease-in-out 0.2s, background-color ease-in-out 0.2s;
 }
-/* .main-button-playlist:hover, .main-button-editor:hover, */.main-button-player:hover {
+/* .main-button-playlist:hover, .main-button-editor:hover, */
+.main-button-player:hover {
     transform: scale(1.08);
     cursor: pointer;
     background-color: rgb(24, 11, 36);

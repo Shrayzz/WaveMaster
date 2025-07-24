@@ -7,6 +7,7 @@
     <title>Wave Master</title>
     <link rel="stylesheet" href="styles/global.css" />
     <link rel="stylesheet" href="styles/ui/main.css" />
+    <link rel="stylesheet" href="styles/ui/toolbar.css" />
     <link rel="stylesheet" href="styles/ui/music-item.css" />
     <link rel="stylesheet" href="styles/ui/player.css" />
 </head>
@@ -17,7 +18,7 @@
         <p>WaveMaster</p>
     </div>
     <div id="app">
-
+        <div id="bg-main" style="display: none;"></div>
 
         <div id="main" style="display: none;">
             <div class="main-container-title">
@@ -40,6 +41,11 @@
             </div>
         </div>
 
+        <div id="toolbar">
+            <div id="settings"></div>
+            <div id="folder" style="display: none;"></div>
+        </div>
+
         <div id="player" style="display: flex;">
             <div class="player-container-header">
                 <div class="player-container-header-left">
@@ -49,7 +55,7 @@
                     <button class="player-header-button">
                         <img src="../assets/icons/gear.svg" alt="">
                     </button>
-                    <button class="player-header-button">
+                    <button class="folder-button">
                         <img src="../assets/icons/folder-open.svg" alt="">
                     </button>
                     <button class="player-header-button">

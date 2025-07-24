@@ -1,4 +1,4 @@
-import { setDisplayWithAnim, setDisplayMiniWindow } from "./animation.js";
+import { setDisplayWithAnim, setDisplayMiniWindow, showDisplay, hideDisplay } from "./animation.js";
 import { getMusic, createMusic } from './music.js'
 
 const playerLoader = document.getElementById("loader");
@@ -24,6 +24,11 @@ window.addEventListener('DOMContentLoaded', async () => {
 // Window management events
 document.querySelector('.main-button-player').addEventListener('click', () => setDisplayWithAnim('main', 'player'));
 document.querySelector('.player-container-header .back').addEventListener('click', () => setDisplayWithAnim('player', 'main'));
+
+// Small window events 
+document.querySelector('.folder-button').addEventListener('click', () => showDisplay('folder', 'bg-main'));
+document.querySelector('#folder').addEventListener('click', () => hideDisplay('folder', 'bg-main'));
+
 
 let isMiniWindowOpen = false;
 document.getElementById('player-volume').addEventListener('click', () => {
