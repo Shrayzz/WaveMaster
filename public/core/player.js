@@ -121,6 +121,7 @@ let isDragging = false;
 
 progressBar.parentElement.addEventListener('mousedown', (e) => {
     isDragging = true;
+    audio.pause();
     updateProgress(e);
 });
 document.addEventListener('mousemove', (e) => {
@@ -130,6 +131,7 @@ document.addEventListener('mousemove', (e) => {
 });
 document.addEventListener('mouseup', () => {
     isDragging = false;
+    audio.play();
 });
 
 function updateProgress(e) {
