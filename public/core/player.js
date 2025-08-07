@@ -1,46 +1,66 @@
+import { globalValues } from "./music.js";
+
 const audio = document.getElementById('audio-player');
-const currentMusicPlayed = document.querySelector('.player-music-name .music-name-content');
+const borders = document.querySelectorAll('.music-title-borders')
 const playPauseBtn = document.querySelector('.player-play-pause');
-const playBtn = document.querySelector('.player-play');
-const pauseBtn = document.querySelector('.player-pause');
+const prevBtn = document.querySelector('.player-skip-back')
+const nextBtn = document.querySelector('.player-skip-forward')
 const progressBar = document.querySelector('.player-progress-bar');
 const progressFill = document.querySelector('.player-progress-fill');
 const progressThumb = document.querySelector('.player-progress-thumb');
 const volumeControl = document.querySelector('.player-volume-slider');
 const volumeFill = document.querySelector('.player-volume-fill');
-const volumeImg = document.querySelector('.player-volume');
+const volumeImg = document.getElementById('player-volume');
 const volumeThumb = document.querySelector('.player-volume-thumb');
 const volumeValue = document.querySelector('.player-volume-value');
 const volumeMute = document.querySelector('.player-volume-mute');
-const randomBtn = document.querySelector('.player-random-btn');
-const loopBtn = document.querySelector('.player-loop-btn');
+const shuffleBtn = document.getElementById('player-random-btn');
+const loopBtn = document.getElementById('player-loop-btn');
 
-function updateCurrentMusicDisplay() {
+
+// Music played
+export function updateCurrentMusicDisplay() {
     const currentSrc = decodeURIComponent(audio.src);
-    const musicItems = document.querySelectorAll('.player-container-list .music-item');
 
-    musicItems.forEach(item => {
+    globalValues.musicItems.forEach(item => {
         const dataPath = item.getAttribute('data-path');
         const normalizedPath = dataPath.replace(/\\/g, '/');
 
         if (currentSrc.includes(normalizedPath)) {
             const title = item.querySelector('.music-title')?.textContent || 'Musique inconnue';
-            const span = document.querySelector('.music-title-content'); // élément cible
+            console.log("Titre choisi :", title);
+            const span = document.querySelector('.music-title-content');
 
             if (span) {
                 span.textContent = title;
                 span.style.animation = 'none';
                 void span.offsetWidth;
 
-                const containerWidth = span.parentElement.offsetWidth;
-                const textWidth = span.scrollWidth;
-                const distance = textWidth + containerWidth;
+                requestAnimationFrame(() => {
+                    const containerWidth = span.parentElement.offsetWidth;
+                    const textWidth = span.scrollWidth;
 
-                span.style.setProperty('--scroll-distance', `${distance}px`);
+                    const shouldScroll = textWidth > containerWidth;
 
-                const duration = (distance / 100) * 2;
+                    if (shouldScroll) {
+                        const distance = textWidth + containerWidth;
+                        span.style.setProperty('--scroll-distance', `${distance}px`);
 
-                span.style.animation = `scrollText ${duration}s linear infinite`;
+                        const duration = (distance / 100) * 1.5;
+                        span.style.left = '100%';
+                        span.style.transform = '';
+                        borders.forEach(border => {
+                            border.style.display = 'block';
+                        });
+                        span.style.animation = `scrollText ${duration}s linear infinite`;
+                    } else {
+                        borders.forEach(border => {
+                            border.style.display = 'none';
+                        });
+                        span.style.left = '0%';
+                        span.style.animation = 'none';
+                    }
+                });
             }
 
             document.querySelectorAll(".music-title-part").forEach(el => {
@@ -51,21 +71,33 @@ function updateCurrentMusicDisplay() {
     });
 }
 
+// Player
 audio.addEventListener('play', () => {
     updateCurrentMusicDisplay();
+    updatePlayPauseIcon();
 });
+
+
+function updatePlayPauseIcon() {
+    if (audio.paused) {
+        playPauseBtn.classList.remove('pause');
+        playPauseBtn.classList.add('play');
+    } else {
+        playPauseBtn.classList.remove('play');
+        playPauseBtn.classList.add('pause');
+    }
+}
 
 playPauseBtn.addEventListener('click', () => {
     if (audio.paused) {
         audio.play();
-        playPauseBtn.classList.remove('play');
-        playPauseBtn.classList.add('pause');
     } else {
         audio.pause();
-        playPauseBtn.classList.remove('pause');
-        playPauseBtn.classList.add('play');
     }
+    updatePlayPauseIcon();
 });
+
+// Progress bar
 
 function formatTime(seconds) {
     const mins = Math.floor(seconds / 60);
@@ -107,11 +139,14 @@ function updateProgress(e) {
     audio.currentTime = percent * audio.duration;
 }
 
+// Volume
+
 function updateVolumeIcon() {
     const volumePercent = audio.volume * 100;
 
     volumeImg.classList.remove("player-volume-100", "player-volume-50", "player-volume-0");
 
+    console.log("Audio changed :", parseInt(audio.volume * 100));
     if (audio.muted || audio.volume === 0) {
         volumeImg.classList.add("player-volume-0");
     } else if (volumePercent <= 50) {
@@ -119,7 +154,9 @@ function updateVolumeIcon() {
     } else {
         volumeImg.classList.add("player-volume-100");
     }
+    console.log("Added class :", volumeImg.className);
 }
+audio.addEventListener('volumechange', updateVolumeIcon);
 
 function setVolume(clientY) {
     const rect = volumeControl.getBoundingClientRect();
@@ -146,7 +183,7 @@ document.addEventListener('mousemove', (e) => {
         volumeValue.textContent = Number(audio.volume * 100).toFixed(0);
 
         if (!audio.muted) {
-            previousVolume = audio.volume; 
+            previousVolume = audio.volume;
         }
     }
 });
@@ -189,27 +226,80 @@ volumeMute.addEventListener('click', () => {
     setInitialVolume();
 });
 
-let loopState = 'none'; // none, all, one
+// Backward and forward track
+
+nextBtn.addEventListener('click', () => {
+    if (globalValues.currentTrackIndex < globalValues.musicList.length - 1) {
+        globalValues.currentTrackIndex++;
+        playTrackByIndex(globalValues.currentTrackIndex);
+    }
+});
+
+prevBtn.addEventListener('click', () => {
+    if (globalValues.currentTrackIndex > 0) {
+        globalValues.currentTrackIndex--;
+        playTrackByIndex(globalValues.currentTrackIndex);
+    }
+});
+
+function playTrackByIndex(index) {
+    const music = globalValues.musicList[index];
+    if (!music) return;
+
+    const path = music.path;
+    audio.src = path;
+    audio.play();
+}
+
+// Loops and shuffle
 
 loopBtn.addEventListener('click', () => {
-    if (loopState === 'none') {
-        loopState = 'all';
-        loopBtn.className = 'loop-all';
-    } else if (loopState === 'all') {
-        loopState = 'one';
-        loopBtn.className = 'loop-one';
+    loopBtn.classList.remove('repeat-all', 'repeat-one', 'no-repeat');
+
+    if (globalValues.loopState === 'none') {
+        globalValues.loopState = 'all';
+        loopBtn.classList.add('repeat-all');
+        audio.loop = false; 
+    } else if (globalValues.loopState === 'all') {
+        globalValues.loopState = 'one';
+        loopBtn.classList.add('repeat-one');
         audio.loop = true;
     } else {
-        loopState = 'none';
-        loopBtn.className = '';
+        globalValues.loopState = 'none';
+        loopBtn.classList.add('no-repeat');
         audio.loop = false;
     }
 });
 
-audio.addEventListener('ended', () => {
-    if (loopState === 'one') {
-        audio.play();
-    } else if (loopState === 'all' || isRandomEnabled) {
-        playNextRandomTrack();
+shuffleBtn.addEventListener('click', () => {
+    shuffleBtn.classList.remove('shuffle', 'no-shuffle');
+
+    if (globalValues.shuffleState === false) {
+        globalValues.shuffleState = true;
+        shuffleBtn.classList.add('shuffle');
+    } else {
+        globalValues.shuffleState = false;
+        shuffleBtn.classList.add('no-shuffle');
     }
 });
+
+audio.onended = () => {
+    const loopState = globalValues.loopState;
+    const shuffleState = globalValues.shuffleState;
+
+    if (shuffleState === true) {
+        const result = Math.floor(Math.random() * globalValues.musicList.length);
+        console.log("Random track selected :", result);
+
+        globalValues.currentTrackIndex = result;
+        playTrackByIndex(result);
+    } else if (loopState === 'all') {
+        const list = globalValues.musicList.length;
+        let index = globalValues.currentTrackIndex;
+
+        index = (index + 1) % list;
+
+        globalValues.currentTrackIndex = index;
+        playTrackByIndex(index);
+    }
+};

@@ -1,24 +1,25 @@
 import { setDisplayWithAnim, setDisplayMiniWindow, showDisplay, hideDisplay } from "./animation.js";
-import { getMusic, createMusic } from './music.js'
+import { getMusic, createMusic, globalValues } from './music.js'
+import { updateCurrentMusicDisplay } from "./player.js";
 
-const playerLoader = document.getElementById("loader");
 
 // DOM events
 window.addEventListener('DOMContentLoaded', async () => {
     const data = await getMusic();
-    createMusic(data);
+    await createMusic(data);
 
-    playerLoader.style.display = "none";
+    globalValues.musicItems = document.querySelectorAll('#player-container-list .music-item');
 
-    document.querySelectorAll('.music-item').forEach(item => {
+    globalValues.musicItems.forEach(item => {
         item.addEventListener('click', () => {
             const audio = document.getElementById('audio-player');
             const path = item.dataset.path;
+            globalValues.currentTrackIndex = parseInt(item.dataset.index);
+            console.log(" Selected index:", globalValues.currentTrackIndex)
             audio.src = path;
             audio.play();
         });
     });
-
 });
 
 // Window management events

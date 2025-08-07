@@ -57,6 +57,8 @@
 }
 .music-artist { 
     width: 300px; 
+    overflow-x: hidden;
+    white-space: nowrap;
     /* border: green solid 1px; */
 }
 .music-duration { 

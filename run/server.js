@@ -1,9 +1,10 @@
-import { serve } from "bun";
+import { serve, sleep } from "bun";
 import path from "path";
 import fs from "fs";
 
 import { createMusic } from "../backend/instance.js";
 import { addFolder } from "../backend/folder.js";
+import { setTimeout } from "timers/promises";
 
 const baseDir = path.join(import.meta.dir, "run");
 
@@ -26,6 +27,7 @@ const server = serve({
         }
         // if(req.method === "GET" && url.pathname === '/music/remove') {}
         if (req.method === "GET" && url.pathname === "/music/get") {
+            // await sleep(15000); 
             const musicList = await createMusic();
             return new Response(JSON.stringify(musicList), {
                 status: 200,
