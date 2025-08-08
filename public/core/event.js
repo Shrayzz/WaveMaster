@@ -9,6 +9,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     await createMusic(data);
 
     globalValues.musicItems = document.querySelectorAll('#player-container-list .music-item');
+    console.log(globalValues.musicItems)
 
     globalValues.musicItems.forEach(item => {
         item.addEventListener('click', () => {

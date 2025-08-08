@@ -363,6 +363,7 @@
     display: flex;
     align-items: center;
     width: 15%;
+    user-select: none;
 }
 
 .player-read-current-duration {
@@ -528,7 +529,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 30%;
+    width: 90px;
 }
 
 .repeat-all, .repeat-one, .no-repeat, .shuffle, .no-shuffle {
