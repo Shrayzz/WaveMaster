@@ -1,36 +1,36 @@
-export const globalValues = {
-    musicList: [],
-    musicItems: [],
-    currentTrackIndex: 0,
-    loopState: 'none',
-    shuffleState: false
+export async function addFolder(folderURL) {
+    try {
+        const res = await window.wmAPI.addFolder(folderURL);
+        console.log(res.message);
+    } catch (err) {
+        console.error(`Erreur ajout dossier ${folderURL} :`, err);
+    }
 }
-const playerLoader = document.getElementById("loader");
 
+export async function removeFolder(folderURL) {
+    try {
+        const res = await window.wmAPI.removeFolder(folderURL);
+        console.log(res.message);
+    } catch (err) {
+        console.error(`Erreur suppression dossier ${folderURL} :`, err);
+    }
+}
 
 export async function getMusic() {
     const message = document.querySelector('#loader .desc-loader');
 
     try {
-        const response = await fetch('http://localhost:8000/music/get', {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-
-        if (!response.ok) {
-            message.textContent = 'An error occurred... Please restart app.';
-            console.error('Erreur récupération des musiques :', response.status);
+        try {
+            console.log('Attempting to load tracks...');
+            const res = await window.wmAPI.getFolder();
+            console.log(res.message);
+        } catch (err) {
+            console.error(`Erreur suppression dossier ${folderURL} :`, err);
             return null;
         }
 
-        const data = await response.json();
+        const data = await res.json();
         console.log('Musiques récupérées', data);
-        console.log("MusicList before :", globalValues.musicList);
-        globalValues.musicList = data;
-        console.log("MusicList after :", globalValues.musicList);
-
         return data;
     } catch (err) {
         message.style.color = "red";
@@ -40,18 +40,28 @@ export async function getMusic() {
     }
 }
 
-
-export async function createMusic(data) {
+export async function createMusicTabs(data) {
+    const playerLoader = document.getElementById("loader");
     const container = document.getElementById('player-container-list');
     container.innerHTML = '';
 
     let index = 0;
 
+    const seen = new Set();
+    const uniqueData = [];
+
     for (const music of data) {
         const { path: fullPath, title, artist, duration } = music;
 
-        // console.log("Création item:", index, title, artist, duration);
+        const key = `${music.path}|${music.title}|${music.artist}|${music.duration}`;
+        if (!seen.has(key)) {
+            seen.add(key);
+            uniqueData.push(music);
+        }
 
+        console.log("Création item:", index, title, artist, duration);
+
+        playerLoader.style.display = "none";
         const musicItem = createMusicItem(fullPath, title, artist, duration, index);
         container.append(musicItem.div, musicItem.hr);
 
@@ -61,7 +71,6 @@ export async function createMusic(data) {
 
 
 function createMusicItem(fullPath, title, artist, duration, index) {
-    playerLoader.style.display = "none";
     const div = document.createElement('div');
     const hr = document.createElement('hr');
 

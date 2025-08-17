@@ -1,9 +1,10 @@
 {
     "name": "WaveMaster",
     "version": "1.0.0",
+    "type": "module",
     "main": "run/main.js",
     "scripts": {
-        "dev": "concurrently \"bun --watch run/server.js\" \"electron .\"",
+        "dev": "electron .",
         "start": "electron-forge start",
         "package": "electron-forge package",
         "make": "electron-forge make"

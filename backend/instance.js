@@ -1,14 +1,29 @@
 import fs from 'fs';
 import path from 'path';
 import * as mm from 'music-metadata';
+import { fileURLToPath } from 'url';
 
-const folders = require('./data/folders.json')
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const folders = path.join(__dirname, 'data', 'folders.json');
 const SUPPORTED_FORMATS = ['.mp3', '.flac', '.ogg', '.wav'];
+
+function readFolders() {
+    try {
+        const data = fs.readFileSync(folders, 'utf-8');
+        return JSON.parse(data).folders || [];
+    } catch (err) {
+        console.error("Erreur lecture du fichier folders.json :", err);
+        return [];
+    }
+}
 
 export async function createMusic() {
     let music = [];
+    const folders = readFolders();  
 
-    for (const folderPath of folders.folders) {
+    for (const folderPath of folders) {
         try {
             const allFiles = getAllFilesRecursively(folderPath);
 
@@ -27,12 +42,7 @@ export async function createMusic() {
                         ? formatDuration(metadata.format.duration)
                         : "N/A";
 
-                    return {
-                        path: filePath,
-                        title,
-                        artist,
-                        duration
-                    };
+                    return { path: filePath, title, artist, duration };
                 } catch (err) {
                     console.error(`Erreur de métadonnées : ${filePath}`, err);
                     return null; 
@@ -65,8 +75,8 @@ function formatDuration(seconds) {
 
 function getAllFilesRecursively(dirPath) {
     let results = [];
-
     const list = fs.readdirSync(dirPath);
+
     for (const file of list) {
         const fullPath = path.join(dirPath, file);
         const stat = fs.statSync(fullPath);

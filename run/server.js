@@ -1,42 +1,42 @@
-import { serve, sleep } from "bun";
-import path from "path";
-import fs from "fs";
+// import { serve, sleep } from "bun";
+// import path from "path";
+// import fs from "fs";
 
-import { createMusic } from "../backend/instance.js";
-import { addFolder } from "../backend/folder.js";
-import { setTimeout } from "timers/promises";
+// import { createMusic } from "../backend/instance.js";
+// import { addFolder } from "../backend/folder.js";
+// import { setTimeout } from "timers/promises";
 
-const baseDir = path.join(import.meta.dir, "run");
+// const baseDir = path.join(import.meta.dir, "run");
 
-const server = serve({
-    async fetch(req) {
-        const url = new URL(req.url);
+// const server = serve({
+//     async fetch(req) {
+//         const url = new URL(req.url);
 
-        const headers = new Headers({
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET, POST",
-            "Access-Control-Allow-Headers": "Content-Type, Authorization",
-        });
+//         const headers = new Headers({
+//             "Access-Control-Allow-Origin": "*",
+//             "Access-Control-Allow-Methods": "GET, POST",
+//             "Access-Control-Allow-Headers": "Content-Type, Authorization",
+//         });
 
-        // Folder and music creation
-        if (req.method === "POST" && url.pathname === "/music/add") {
-            const folderURL = await req.text();
-            await addFolder(folderURL);
+//         // Folder and music creation
+//         if (req.method === "POST" && url.pathname === "/music/add") {
+//             const folderURL = await req.text();
+//             await addFolder(folderURL);
 
-            return new Response("Ajouté", { status: 200 });
-        }
-        // if(req.method === "GET" && url.pathname === '/music/remove') {}
-        if (req.method === "GET" && url.pathname === "/music/get") {
-            // await sleep(15000); 
-            const musicList = await createMusic();
-            return new Response(JSON.stringify(musicList), {
-                status: 200,
-                headers: { "Content-Type": "application/json" }
-            });
-        }
-    },
+//             return new Response("Ajouté", { status: 200 });
+//         }
+//         // if(req.method === "GET" && url.pathname === '/music/remove') {}
+//         if (req.method === "GET" && url.pathname === "/music/get") {
+//             // await sleep(15000); 
+//             const musicList = await createMusic();
+//             return new Response(JSON.stringify(musicList), {
+//                 status: 200,
+//                 headers: { "Content-Type": "application/json" }
+//             });
+//         }
+//     },
 
-    port: 8000,
-});
+//     port: 8000,
+// });
 
-console.log(`Server running at ${server.url.href}`);
+// console.log(`Server running at ${server.url.href}`);

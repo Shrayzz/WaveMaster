@@ -1,30 +1,31 @@
 import { setDisplayWithAnim, setDisplayMiniWindow, showDisplay, hideDisplay } from "./animation.js";
-import { getMusic, createMusic, globalValues } from './music.js'
-import { updateCurrentMusicDisplay } from "./player.js";
-
-
-// DOM events
-window.addEventListener('DOMContentLoaded', async () => {
-    const data = await getMusic();
-    await createMusic(data);
-
-    globalValues.musicItems = document.querySelectorAll('#player-container-list .music-item');
-    console.log(globalValues.musicItems)
-
-    globalValues.musicItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const audio = document.getElementById('audio-player');
-            const path = item.dataset.path;
-            globalValues.currentTrackIndex = parseInt(item.dataset.index);
-            console.log(" Selected index:", globalValues.currentTrackIndex)
-            audio.src = path;
-            audio.play();
-        });
-    });
-});
+import { createMusicTabs } from "./music.js";
+const globalValues = await window.wmAPI.getGlobalValues();
 
 // Window management events
-document.querySelector('.main-button-player').addEventListener('click', () => setDisplayWithAnim('main', 'player'));
+document.querySelector('.main-button-player').addEventListener('click', async () => {
+    setDisplayWithAnim('main', 'player');
+
+    if (globalValues.musicList.length === 0) {
+        globalValues.musicList = await window.wmAPI.loadMusic();
+        console.log(globalValues.musicList);
+        await createMusicTabs(globalValues.musicList.data);
+
+        globalValues.musicItems = document.querySelectorAll('#player-container-list .music-item');
+
+        // DOM Events
+        globalValues.musicItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const audio = document.getElementById('audio-player');
+                const path = item.dataset.path;
+                globalValues.currentTrackIndex = parseInt(item.dataset.index);
+                console.log(" Selected index:", globalValues.currentTrackIndex)
+                audio.src = path;
+                audio.play();
+            });
+        });
+    }
+});
 document.querySelector('.player-container-header .back').addEventListener('click', () => setDisplayWithAnim('player', 'main'));
 
 // Small window events 

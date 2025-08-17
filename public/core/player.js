@@ -1,5 +1,3 @@
-import { globalValues } from "./music.js";
-
 const audio = document.getElementById('audio-player');
 const borders = document.querySelectorAll('.music-title-borders')
 const playPauseBtn = document.querySelector('.player-play-pause');
@@ -17,6 +15,7 @@ const volumeMute = document.querySelector('.player-volume-mute');
 const shuffleBtn = document.getElementById('player-random-btn');
 const loopBtn = document.getElementById('player-loop-btn');
 
+const globalValues = await window.wmAPI.getGlobalValues();
 
 // Music played
 export function updateCurrentMusicDisplay() {
