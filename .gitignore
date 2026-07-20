@@ -1,0 +1,8 @@
+.gitattributes
+/dist/
+/node_modules/
+bun.lockb
+/backend/data/urls.json
+/backend/data/cache/
+package.json
+todo

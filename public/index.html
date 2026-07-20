@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wave Master</title>
+    <link rel="stylesheet" href="styles/global.css" />
+    <link rel="stylesheet" href="styles/ui/main.css" />
+    <link rel="stylesheet" href="styles/ui/toolbar.css" />
+    <link rel="stylesheet" href="styles/ui/music-item.css" />
+    <link rel="stylesheet" href="styles/ui/player.css" />
+    <link rel="stylesheet" href="styles/ui/settings.css" />
+</head>
+
+<body>
+    <div id="header">
+        <img src="../assets/icons/wm-icon.svg" alt="">
+        <p>WaveMaster</p>
+    </div>
+
+    <div id="app">
+        <div id="bg-main" style="display: none;"></div>
+
+        <div id="main" style="display: flex;">
+            <div class="main-container-title">
+                <p class="main-text-mainTitle">WaveMaster</p>
+                <p class="main-text-mainDesc">The best simple audio player and editor</p>
+            </div>
+            <div class="main-container-buttons">
+                <button class="main-button-playlist" disabled>
+                    <img src="../assets/icons/playlist.svg">
+                    <p class="main-text-playlistText">Playlists</p>
+                </button>
+                <button class="main-button-player">
+                    <img src="../assets/icons/music-note.svg">
+                    <p class="main-text-playerText">Player</p>
+                </button>
+                <button class="main-button-editor">
+                    <img src="../assets/icons/faders.svg">
+                    <p class="main-text-editorText">Editor</p>
+                </button>
+            </div>
+        </div>
+
+
+
+        <div id="toolbar">
+            <div id="folder-scene" style="display: none;"></div>
+        </div>
+
+        <div id="player" style="display: none;">
+            <div class="player-container-header">
+                <div class="player-container-header-left">
+                    <button class="back-button">
+                        <img src="../assets/icons/arrow-u-up-left.svg" alt="">
+                    </button>
+                    <button class="settings-button">
+                        <img src="../assets/icons/gear.svg" alt="">
+                    </button>
+                    <button class="reset-button">
+                        <img src="../assets/icons/arrows-counter-clockwise.svg" alt="">
+                    </button>
+                    <button class="search-button" onclick="alert('Unavailable feature')" disabled
+                        style="pointer-events: none; opacity: 0.5;">
+                        <img src="../assets/icons/list-magnifying-glass.svg" alt="">
+                    </button>
+                    <button class="github" onclick="alert('Unavailable feature')" disabled
+                        style="pointer-events: none; opacity: 0.5;">
+                        <img src="../assets/icons/github-logo.svg" alt="">
+                    </button>
+                    <button class="donate" onclick="alert('Unavailable feature')" disabled
+                        style="pointer-events: none; opacity: 0.5;">
+                        <img src="../assets/icons/hand-heart.svg" alt="">
+                    </button>
+                </div>
+                <div class="player-container-header-right">
+                    <button class="player-header-button set-player-button">
+                        <img src="../assets/icons/music-note.svg" alt="">
+                    </button>
+                    <button class="player-header-button set-editor-button">
+                        <img src="../assets/icons/faders.svg" alt="">
+                    </button>
+                    <button class="player-header-button set-playlist-button" disabled
+                        style="pointer-events: none; opacity: 0.5;">
+                        <img src="../assets/icons/playlist.svg" alt="">
+                    </button>
+                </div>
+            </div>
+            <hr class="player-vertical-line">
+            <div id="player-and-editor">
+                <div id="player-container-list">
+                    <div class="player-loader loader">
+                        <div class="circle-loader"></div>
+                        <div class="desc-loader">Loading all tracks...</div>
+                    </div>
+                </div>
+                <div id="editor-part">
+                    <div class="editor-buttons">
+                        <button class="download-editor">
+                            <img src="../assets/icons/download-simple.svg" alt="">
+                        </button>
+                        <button class="editor-reset-button">
+                            <img src="../assets/icons/arrow-counter-clockwise.svg" alt="">
+                        </button>
+                    </div>
+                    <div class="editor-sliders">
+                        <div class="labels-container">
+                            <label for="rate-slider" class="label-sliders">Rate :</label>
+                            <div>
+                                <span id="rate-value" class="value-sliders">1.00</span>
+                            </div>
+                        </div>
+                        <input type="range" id="rate-slider" min="0.5" max="2" step="0.01" value="1"
+                            style="width: 100%;">
+                    </div>
+                    <div class="editor-sliders">
+                        <div class="labels-container">
+                            <label for="gain-slider" class="label-sliders">Gain :</label>
+                            <div>
+                                <span id="gain-value" class="value-sliders">100%</span>
+                            </div>
+                        </div>
+                        <input type="range" id="gain-slider" min="100" max="500" step="1" value="0"
+                            style="width: 100%;">
+                    </div>
+                    <div class="editor-sliders">
+                        <div class="labels-container">
+                            <label for="reverb-slider" class="label-sliders">Reverb :</label>
+                            <div>
+                                <span id="reverb-value" class="value-sliders">0</span>
+                            </div>
+                        </div>
+                        <input type="range" id="reverb-slider" min="0" max="100" step="1" value="0"
+                            style="width: 100%;">
+                    </div>
+                    <div class="editor-sliders">
+                        <div class="labels-container">
+                            <label for="bass-slider" class="label-sliders">Bass :</label>
+                            <div>
+                                <span id="bass-value" class="value-sliders">0</span>
+                            </div>
+                        </div>
+                        <input type="range" id="bass-slider" min="-50" max="50" step="1" value="0" style="width: 100%;">
+                    </div>
+                    <div class="editor-sliders">
+                        <div class="labels-container">
+                            <label for="treble-slider" class="label-sliders">Treble :</label>
+                            <div>
+                                <span id="treble-value" class="value-sliders">0</span>
+                            </div>
+                        </div>
+                        <input type="range" id="treble-slider" min="-50" max="50" step="1" value="0"
+                            style="width: 100%;">
+                    </div>
+                </div>
+            </div>
+            <hr class="player-vertical-line">
+            <div class="player-container-audio">
+                <audio id="audio-player"></audio>
+                <div class="player-container-selected-music">
+                    <div class="player-music-now-playing">
+                        <img class="music-title-part" src="../assets/icons/music-notes.svg" alt="">
+                        <img class="music-title-part music-title-part-green" src="../assets/icons/music-notes-green.svg"
+                            alt="">
+                        <p class="music-title-part">Now Playing :</p>
+                    </div>
+                    <div class="player-music-name">
+                        <div class="music-title-part music-title-borders border-left" style="display: none;"></div>
+
+                        <div class="music-name-content">
+                            <span class="music-title-content">~</span>
+                        </div>
+
+                        <div class="music-title-part music-title-borders border-right" style="display: none;"></div>
+                    </div>
+                </div>
+                <div class="player-container-main-audio">
+                    <div class="player-progress-container">
+                        <div class="player-progress-bar">
+                            <div class="player-progress-fill"></div>
+                            <div class="player-progress-thumb"></div>
+                        </div>
+                    </div>
+                    <div class="player-read">
+                        <div class="player-read-current-duration">--:--</div>
+                        <div class="player-read-main-part">
+                            <div class="player-skip-back"></div>
+                            <div class="player-play-pause"></div>
+                            <div class="player-skip-forward"></div>
+                        </div>
+                        <div class="player-read-total-duration">--:--</div>
+                    </div>
+                </div>
+                <!-- ? Add fullscreen, music details window and mini-window -->
+                <div class="player-container-audio-adjusts">
+                    <div class="player-volume-main-container">
+                        <div id="player-volume" class="player-volume-100"></div>
+                        <div id="volume-window" style="display: none;">
+                            <div class="player-volume-value">100</div>
+                            <div class="player-volume-container">
+                                <div class="player-volume-slider">
+                                    <div class="player-volume-fill"></div>
+                                    <div class="player-volume-thumb"></div>
+                                </div>
+                            </div>
+                            <div class="player-volume-mute demute"></div>
+                        </div>
+                    </div>
+                    <div class="player-audio-adjusts">
+                        <div id="player-random-btn" class="no-shuffle"></div>
+                        <div id="player-loop-btn" class="no-repeat"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="playlist" style="display: none;">
+            <div class="player-container-header">
+                <div class="player-container-header-left">
+                    <button class="back-button">
+                        <img src="../assets/icons/arrow-u-up-left.svg" alt="">
+                    </button>
+                    <button class="settings-button">
+                        <img src="../assets/icons/gear.svg" alt="">
+                    </button>
+                    <button class="reset-button">
+                        <img src="../assets/icons/arrows-counter-clockwise.svg" alt="">
+                    </button>
+                    <button class="search-button" onclick="alert('Unavailable feature')">
+                        <img src="../assets/icons/list-magnifying-glass.svg" alt="">
+                    </button>
+                    <button class="github" onclick="alert('Unavailable feature')">
+                        <img src="../assets/icons/github-logo.svg" alt="">
+                    </button>
+                    <button class="donate" onclick="alert('Unavailable feature')">
+                        <img src="../assets/icons/hand-heart.svg" alt="">
+                    </button>
+                </div>
+                <div class="player-container-header-right">
+                    <button class="player-header-button">
+                        <img src="../assets/icons/playlist.svg" alt="">
+                    </button>
+                    <button class="player-header-button">
+                        <img src="../assets/icons/faders.svg" alt="">
+                    </button>
+                </div>
+            </div>
+            <hr class="player-vertical-line">
+            <div id="editor-loader" class="loader">
+                <div class="circle-loader"></div>
+                <div class="desc-loader">Loading all tracks...</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="settings" style="display: none;">
+        <div class="settings-toolbar">
+            <button class="back-button">
+                <img src="../assets/icons/arrow-u-up-left.svg" alt="">
+            </button>
+            <p class="settings-title">v1.0 - Settings</p>
+        </div>
+        <hr class="player-vertical-line">
+        <div class="settings-body">
+            <div class="settings-switches">
+                Oops... Sorry! No settings can be displayed... (for now)
+            </div>
+            <div class="settings-folders">
+                <div class="folders-tools">
+                    <div class="folders-tools-left" style="opacity: 0; pointer-events: none;">
+                        <button class="folder-tool-undo">
+                            <img src="../assets/icons/x.svg" alt="">
+                        </button>
+                        <button class="folder-tool-set">
+                            <img src="../assets/icons/check.svg" alt="">
+                        </button>
+                    </div>
+                    <div class="folders-tools-right">
+                        <button class="folder-tool-delete-all">
+                            <img src="../assets/icons/trash.svg" alt="">
+                        </button>
+                        <button class="folder-tool-new-folder">
+                            <img src="../assets/icons/folder-simple-plus.svg" alt="">
+                        </button>
+                    </div>
+                </div>
+                <div id="folders-display">
+                    <!-- <div class="folder-display-container">
+                        <div class="folder-display-label-container">
+                            <p>C:/Users/User/Downloads</p>
+                        </div>
+                        <div class="folder-display-other-container">
+                            <div class="folder-display-other-container-top">
+                                <p>67</p>
+                                <img src="../assets/icons/music-note.svg" alt="">
+                            </div>
+                            <div class="folder-display-other-container-bottom">
+                                <button>
+                                    <img src="../assets/icons/pencil.svg" alt="">
+                                </button>
+                                <button>
+                                    <img src="../assets/icons/x.svg" alt="">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="folder-display-container">
+                        <div class="folder-display-label-container">
+                            <p>C:/Musique</p>
+                        </div>
+                        <div class="folder-display-other-container">
+                            <div class="folder-display-other-container-top">
+                                <p>1378</p>
+                                <img src="../assets/icons/music-note.svg" alt="">
+                            </div>
+                            <div class="folder-display-other-container-bottom">
+                                <button>
+                                    <img src="../assets/icons/pencil.svg" alt="">
+                                </button>
+                                <button>
+                                    <img src="../assets/icons/x.svg" alt="">
+                                </button>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ?Ajouter un display pour savoir quel icone fait quoi -->
+        <!-- ?penser a remercier dou vient les assets -->
+
+        <!-- <div class="settings-switches">
+            <div class="setting-tab">
+                <input type="checkbox" class="setting-switch">
+                <p class="setting-label"></p>
+            </div>
+            <div class="setting-tab">
+
+            </div>
+            <div class="setting-tab">
+            </div>
+        </div> -->
+    </div>
+
+    <!-- expand progress bar -->
+     <!-- less precision effect sliders -->
+    <!-- effects added on music type : music only | all -->
+    <!-- music detail want to display : 4 max -->
+    <!-- list scale -->
+    <!-- Update notes -->
+    <!-- Check for updates -->
+    <!-- expand eq -->
+    <!-- language chooser (later) -->
+
+    <script type="module" src="./core/event.js"></script>
+    <script type="module" src="./core/player.js"></script>
+    <script type="module" src="./core/editor.js"></script>
+    <script type="module" src="./core/animation.js"></script>
+    <script type="module" src="./core/settings.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,103 @@
+#main {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 150px;
+}
+
+@keyframes s3 { 
+  100%{transform: rotate(1turn)}
+}
+
+.main-container-title {
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 20px;
+}
+
+.main-text-mainTitle {
+    font-family: 'ws-bold';
+    font-size: 80px;
+    color: aliceblue;
+}
+
+.main-text-mainDesc {
+    font-family: 'ws-regu';
+    font-size: 40px;
+    color: aliceblue;
+}
+
+.main-container-buttons {
+    user-select: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    user-select: none;
+}
+
+.main-container-buttons button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    
+    background-color: rgba(0, 0, 0, 0.5);
+    border: aliceblue solid 5px;
+    border-radius: 10px;
+}
+
+.main-container-buttons button:disabled {    
+    background-color: rgba(60, 60, 60, 0.5);
+    border: rgb(118, 118, 118) solid 5px;
+    border-radius: 10px;
+}
+
+.main-button-playlist, .main-button-editor {
+    width: 300px;
+    height: 300px;
+    transition: transform ease-in-out 0.2s, background-color ease-in-out 0.2s;
+}
+
+.main-button-player {
+    width: 320px;
+    height: 320px;
+    transition: transform ease-in-out 0.2s, background-color ease-in-out 0.2s;
+}
+.main-button-editor:hover, .main-button-player:hover {
+    transform: scale(1.08);
+    cursor: pointer;
+    background-color: rgb(24, 11, 36);
+    transition: transform ease-in-out 0.2s, background-color ease-in-out 0.2s;
+}
+
+.main-container-buttons img {
+    width: 150px;
+    height: 150px;
+}
+.main-container-buttons p {
+    font-family: 'ws-semi';
+    font-size: 48px;
+    color: aliceblue;
+}
+
+@media (max-width: 1200px), (max-height: 750px) {
+    #main { gap: 100px; }
+    .main-text-mainTitle { font-size: 64px; }
+    .main-text-mainDesc { font-size: 28px; }
+    .main-container-buttons { gap: 60px; }
+    .main-button-playlist, .main-button-editor { width: 220px; height: 220px; }
+    .main-button-player { width: 240px; height: 240px; }
+    .main-container-buttons img { width: 90px; height: 90px; }
+    .main-container-buttons p { font-size: 32px; }
+}
