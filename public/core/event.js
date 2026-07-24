@@ -2,9 +2,10 @@ import { setDisplayWithAnim, setDisplayMiniWindow, showDisplay, hideDisplay } fr
 import { applyAllEffects, resetEffects } from "./editor.js";
 import { createMusicTabs } from "./music.js";
 import { updateCurrentMusicDisplay } from "./player.js";
+import { createFolderDiv } from "./settings.js";
 
 const audio = document.getElementById('audio-player');
-const CURRENT_VERSION = "v1.0.0";
+const CURRENT_VERSION = "v1.0.1";
 
 import { globalValues } from "../../backend/data/values.js";
 import { refreshGlobalValues } from "../../backend/data/values.js";
@@ -19,14 +20,16 @@ if (document.readyState === "loading") {
 // Global events
 async function start() {
     console.log("Loading tracks...");
-    void checkForUpdates();
     await initTracks(globalValues);
+    await initFolderTabs();
+    void checkForUpdates();
 }
 
 // Manual check (for now)
 async function checkForUpdates() {
     try {
         const res = await fetch('https://raw.githubusercontent.com/Shrayzz/WaveMaster/main/version.json');
+        // const res = await fetch('../version.json'); test dev only
 
         if (!res.ok) {
             message('⚠️ No github response. Unable to check for updates');
@@ -34,15 +37,32 @@ async function checkForUpdates() {
         }
 
         const { version, link, changes } = await res.json();
-        if (CURRENT_VERSION === version) return;
+        if (!isNewerVersion(CURRENT_VERSION, version)) return;
 
-        alert(
-            `New update available: [${CURRENT_VERSION} → ${version}] - ${link}\n\n${changes || "No more details"}`
+        const result = confirm(
+            `New update available: [${CURRENT_VERSION} → ${version}]\n\nWould you want to update ?\nhttps://github.com/Shrayzz/WaveMaster/releases\n\n\nCHANGELOG :\n\n${changes || "No more details"}`
         );
+
+        if(!result) {
+            return;
+        } 
+        await window.wmAPI.openWebsite("https://github.com/Shrayzz/WaveMaster/releases");
 
     } catch (err) {
         console.log("❌ Update check failed:", err);
     }
+}
+
+function isNewerVersion(current, latest) {
+    const a = current.split('.').map(Number);
+    const b = latest.split('.').map(Number);
+
+    for (let i = 0; i < 3; i++) {
+        if (b[i] > a[i]) return true;
+        if (b[i] < a[i]) return false;
+    }
+
+    return false;
 }
 
 async function initTracks() {
@@ -63,6 +83,16 @@ async function initTracks() {
             }
         });
     });
+}
+
+async function initFolderTabs() {
+    const urlList = await window.wmAPI.getUrls();
+
+    for (const url of urlList) {
+        const urlCount = await window.wmAPI.getFolderCount(url);
+        const folderDiv = createFolderDiv(url, urlCount, true);
+        document.getElementById('folders-display').appendChild(folderDiv);
+    }
 }
 
 export async function restart() {
@@ -228,8 +258,24 @@ function setStartMode(mode) {
     }
 }
 
+// Github redirection
+document.querySelector(".github").addEventListener('click', () => openGithub());
+
+function openGithub() {
+    const result = confirm("Do you want to open the GitHub page ?");
+    if (!result) {
+        return;
+    }
+    window.wmAPI.openWebsite("https://github.com/Shrayzz/WaveMaster");
+}
+
 // Restart event
 document.querySelector(".reset-button").addEventListener('click', async () => restart());
+
+// Img events
+document.querySelectorAll("img").forEach(img => {
+    img.draggable = false;
+});
 
 // Main menu events
 document.querySelector('.main-button-player').addEventListener('click', async () => {

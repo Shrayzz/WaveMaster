@@ -36,9 +36,9 @@ async function setNewFolder() {
         }
 
         const count = await window.wmAPI.getFolderCount(urlNormalized);
-        const folderDiv = createFolderDiv(urlNormalized, count);
+        const folderDiv = createFolderDiv(urlNormalized, count, false);
+        
 
-        // ! FIX
         foldersDisplay.appendChild(folderDiv);
         const result = await folderAddConfirmation(folderDiv);
         console.log("confirm", result);
@@ -56,9 +56,10 @@ async function setNewFolder() {
     }
 }
 
-function createFolderDiv(path, count) {
+export function createFolderDiv(path, count, pending) {
     const mainContainer = document.createElement("div");
-    mainContainer.className = "folder-display-container-temp";
+    console.log("pending =", pending, typeof pending);
+    mainContainer.className = pending ? "folder-display-container" : "folder-display-container-temp";
 
     mainContainer.innerHTML = `
         <div class="folder-display-label-container">
@@ -71,7 +72,7 @@ function createFolderDiv(path, count) {
                 <img src="../assets/icons/music-note.svg" alt="">
             </div>
 
-            <div class="folder-display-other-container-bottom">
+            <div class="folder-display-other-container-bottom" style="display: ${pending ? "flex" : "none"}">
                 <button class="edit-btn">
                     <img src="../assets/icons/pencil.svg" alt="">
                 </button>
@@ -114,7 +115,10 @@ async function folderAddConfirmation(container) {
         
             const el = document.querySelector('.folder-display-container-temp');
             el.classList.remove('folder-display-container-temp');
-            el.classList.add('folder-display-container')
+            el.classList.add('folder-display-container');
+
+            const btns = document.querySelector('.folder-display-other-container-bottom');
+            btns.style.display = 'flex';
 
             cleanup();
             resolve(true);

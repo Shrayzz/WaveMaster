@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import fs from "fs";
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -143,6 +143,10 @@ ipcMain.handle("get-folder-count", async (event, filePath) => {
         return count;
     }
     return countMusicFiles(filePath);
+});
+
+ipcMain.on('open-website', (event, url) => {
+    shell.openExternal(url);
 });
 
 app.on('ready', createWindow);

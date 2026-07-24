@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import * as mm from 'music-metadata';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,7 +14,6 @@ export async function createMusic() {
     let folders;
 
     const localUrls = path.join(__dirname, 'backend', 'data', 'urls.json');
-    console.log(localUrls)
 
     if (fs.existsSync(localUrls)) {
         folders = JSON.parse(fs.readFileSync(localUrls, "utf8"));
@@ -35,7 +34,6 @@ export async function createMusic() {
 
     for (const folderPath of folders) {
         try {
-            console.log(folders);
             const allFiles = getAllFilesRecursively(folderPath);
 
             const supportedFiles = allFiles.filter(filePath => {
@@ -49,7 +47,7 @@ export async function createMusic() {
                     const ext = path.extname(filePath).toLowerCase();
 
                     return {
-                        path: filePath,
+                        path: pathToFileURL(filePath).href,
                         title: metadata.common.title || path.basename(filePath, ext),
                         artist: metadata.common.artist || "Artiste Inconnu",
                         duration: metadata.format.duration

@@ -1,5 +1,5 @@
 {
-    "version": "v1.0.0",
+    "version": "v1.0.1",
     "link": "https://github.com/Shrayzz/WaveMaster",
-    "changes": "Initial release"
+    "changes": "- Fixed persistent folder loading. Saved folders are now restored correctly after restarting the application\n- Added Github page functionality\n- Fixed the \"NotSupportedError\" error when trying to load track with special chars in\n- Upgraded check for updates function\n- Fixed draggable imgs on buttons"
 }

@@ -7,5 +7,6 @@ contextBridge.exposeInMainWorld('wmAPI', {
     chooseSavePath: () => ipcRenderer.invoke("choose-save-path"),
     saveFile: (event, filePath, buffer) => ipcRenderer.invoke("save-file", event, filePath, buffer),
     getFolderPath: () => ipcRenderer.invoke('new-folder-path'),
-    getFolderCount: (filePath) => ipcRenderer.invoke('get-folder-count', filePath)
+    getFolderCount: (filePath) => ipcRenderer.invoke('get-folder-count', filePath),
+    openWebsite: (url) => ipcRenderer.send('open-website', url)
 });
